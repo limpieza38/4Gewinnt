@@ -1,15 +1,18 @@
 #include <iostream>
-#include "PlayingField.cpp"
-#include "Player.cpp"
+#include "PlayingField.h"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+int main()
+{
+    std::cout << "4 Gewinnt" << std::endl;
     PlayingField playingField;
-    RandomPlayer randomPlayer;
-    int col = randomPlayer.play(playingField.getField());
-    playingField.setStone(col);
-
-    playingField.printField();
+    playingField.print();
+    while (true)
+    {
+        std::cout << "Choose column to play: ";
+        int col;
+        std::cin >> col;
+        playingField.setStone(col);
+        playingField.print();
+    }
     return 0;
 }
-
