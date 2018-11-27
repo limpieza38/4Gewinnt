@@ -21,46 +21,152 @@ void PlayingField::switchPlayer()
     }
 }
 
-bool PlayingField::proofWinner(int row, int column)
+bool PlayingField::proofWinner()
 {
+    int stones = 1;
+    int r = lastRow;
+    int c = lastColumn;
+
+    // Row:
+    // Nach links:
+    while (--c >= 0)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    c = lastColumn;
+    // Nach rechts:
+    while (++c < columns)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    if (stones >= 4)
+    {
+        return true;
+    }
+
+    // Column:
+    stones = 1;
+    r = lastRow;
+    c = lastColumn;
+    // Nach oben:
+    while (--r >= 0)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    r = lastRow;
+    // Nach unten:
+    while (++r < rows)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    if (stones >= 4)
+    {
+        return true;
+    }
+
+    // Diagonal von oben links nach unten rechts:
+    stones = 1;
+    r = lastRow;
+    c = lastColumn;
+    // Nach oben links:
+    while (--r >= 0 && --c >= 0)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    r = lastRow;
+    c = lastColumn;
+    // Nach unten rechts:
+    while (++r < rows && ++c < columns)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    if (stones >= 4)
+    {
+        return true;
+    }
+
+    // Diagonal von unten links nach oben rechts:
+    stones = 1;
+    r = lastRow;
+    c = lastColumn;
+    // Nach unten links:
+    while (++r < rows && --c >= 0)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    r = lastRow;
+    c = lastColumn;
+    // Nach oben rechts:
+    while (--r >= 0 && ++c < columns)
+    {
+        if (field[r][c] == currentPlayer)
+            stones++;
+        else
+            break;
+    }
+    if (stones >= 4)
+    {
+        return true;
+    }
     return false;
+}
+
+bool PlayingField::isFull()
+{
+    return stones >= maxStones;
 }
 
 void PlayingField::print()
 {
-    int i;
-    int j;
-    for (i = 0; i < this->rows; i++)
+    std::cout << std::endl;
+    for (int i = 0; i < rows; i++)
     {
-        for (j = 0; j < this->columns; j++)
+        for (int j = 0; j < columns; j++)
         {
-            std::cout << this->field[i][j] << " ";
+            std::cout << field[i][j] << " ";
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
-void PlayingField::setStone(int column)
+bool PlayingField::setStone(int column)
 {
-    int i = rows - 1;
-    while (i >= 0)
+    int row = rows - 1;
+    while (row >= 0)
     {
-        if (this->field[i][column] == '0')
+        if (field[row][column] == '0')
         {
-            this->field[i][column] = this->currentPlayer;
+            field[row][column] = currentPlayer;
             break;
         }
-        i--;
+        row--;
     }
-    if (i < 0)
-    {
-        std::cout << "Column " << column << " is already full!";
-        return;
-    }
-    if (proofWinner(i, column))
-    {
-        std::cout << "Player " << currentPlayer << " wins!";
-        std::cout << std::endl;
-    }
-    switchPlayer();
+    if (row < 0)
+        return false;
+    stones++;
+    lastRow = row;
+    lastColumn = column;
+    return true;
 };

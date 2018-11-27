@@ -7,23 +7,28 @@
 
 class PlayingField
 {
-  private:
-    const int rows = 6;
-    const int columns = 7;
-    char currentPlayer = 'a';
-    char field[6][7] = {
-        {'0', '0', '0', '0', '0', '0', '0'},
-        {'0', '0', '0', '0', '0', '0', '0'},
-        {'0', '0', '0', '0', '0', '0', '0'},
-        {'0', '0', '0', '0', '0', '0', '0'},
-        {'0', '0', '0', '0', '0', '0', '0'},
-        {'0', '0', '0', '0', '0', '0', '0'}};
-    void switchPlayer();
-    bool proofWinner(int row, int column);
+private:
+  const int rows = 6;
+  const int columns = 7;
+  int stones = 0;
+  int maxStones = 42;
+  int lastRow = -1;
+  int lastColumn = -1;
+  char field[6][7] = {
+      {'0', '0', '0', '0', '0', '0', '0'},
+      {'0', '0', '0', '0', '0', '0', '0'},
+      {'0', '0', '0', '0', '0', '0', '0'},
+      {'0', '0', '0', '0', '0', '0', '0'},
+      {'0', '0', '0', '0', '0', '0', '0'},
+      {'0', '0', '0', '0', '0', '0', '0'}};
 
-  public:
-    PlayingField(){};
-    void print();
-    void setStone(int column);
+public:
+  char currentPlayer = 'a';
+  PlayingField(){};
+  void print();
+  bool setStone(int column);
+  void switchPlayer();
+  bool proofWinner();
+  bool isFull();
 };
 #endif //INC_4GEWINNT_PLAYINGFIELD_H
