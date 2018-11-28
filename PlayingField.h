@@ -5,6 +5,9 @@
 #ifndef INC_4GEWINNT_PLAYINGFIELD_H
 #define INC_4GEWINNT_PLAYINGFIELD_H
 
+
+class Player;
+
 class PlayingField
 {
 private:
@@ -23,8 +26,9 @@ private:
       {'0', '0', '0', '0', '0', '0', '0'}};
 
 public:
-  char currentPlayer = 'a';
-  PlayingField(){};
+  Player* currentPlayer;
+  Player* waitingPlayer;
+  PlayingField(Player* playerOne,Player* playerTwo);
   void print();
   bool setStone(int column);
   void switchPlayer();

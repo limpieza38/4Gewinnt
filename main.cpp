@@ -1,23 +1,26 @@
 #include <iostream>
+#include "Player.h"
 #include "PlayingField.h"
+#include "RandomPlayer.h"
 
 int main()
 {
+    srand (time(0));
     std::cout << "4 Gewinnt" << std::endl;
-    PlayingField playingField;
+    RandomPlayer playerA;
+    RandomPlayer playerB;
+    PlayingField playingField(&playerA, &playerB);
     playingField.print();
     while (true)
     {
-        int col;
-        std::cout << "Player " << playingField.currentPlayer << ", choose column to play: ";
-        std::cin >> col;
-        bool ok = playingField.setStone(col - 1);
+        int col = playingField.currentPlayer->play(&playingField);
+        bool ok = playingField.setStone(col);
         if (ok)
         {
             playingField.print();
             if (playingField.proofWinner())
             {
-                std::cout << "Player " << playingField.currentPlayer << " wins!" << std::endl;
+                std::cout << "Player " << playingField.currentPlayer->name << " wins!" << std::endl;
                 break;
             }
             if (playingField.isFull())

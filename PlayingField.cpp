@@ -4,49 +4,39 @@
 
 #include <iostream>
 #include "PlayingField.h"
+#include "Player.h"
+PlayingField::PlayingField(Player* playerOne, Player* playerTwo) : currentPlayer(playerOne), waitingPlayer(playerTwo) {
 
-/*
-* erst die Zeile, dann die Spalte von oben nach unten.
-*/
-
-void PlayingField::switchPlayer()
-{
-    if (currentPlayer == 'a')
-    {
-        currentPlayer = 'b';
-    }
-    else
-    {
-        currentPlayer = 'a';
-    }
 }
 
-bool PlayingField::proofWinner()
-{
+void PlayingField::switchPlayer() {
+    Player* lastPlayer = currentPlayer;
+    currentPlayer = waitingPlayer;
+    waitingPlayer = lastPlayer;
+}
+
+bool PlayingField::proofWinner() {
     int stones = 1;
     int r = lastRow;
     int c = lastColumn;
 
     // Row:
     // Nach links:
-    while (--c >= 0)
-    {
-        if (field[r][c] == currentPlayer)
+    while (--c >= 0) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
     c = lastColumn;
     // Nach rechts:
-    while (++c < columns)
-    {
-        if (field[r][c] == currentPlayer)
+    while (++c < columns) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
-    if (stones >= 4)
-    {
+    if (stones >= 4) {
         return true;
     }
 
@@ -55,24 +45,21 @@ bool PlayingField::proofWinner()
     r = lastRow;
     c = lastColumn;
     // Nach oben:
-    while (--r >= 0)
-    {
-        if (field[r][c] == currentPlayer)
+    while (--r >= 0) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
     r = lastRow;
     // Nach unten:
-    while (++r < rows)
-    {
-        if (field[r][c] == currentPlayer)
+    while (++r < rows) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
-    if (stones >= 4)
-    {
+    if (stones >= 4) {
         return true;
     }
 
@@ -81,9 +68,8 @@ bool PlayingField::proofWinner()
     r = lastRow;
     c = lastColumn;
     // Nach oben links:
-    while (--r >= 0 && --c >= 0)
-    {
-        if (field[r][c] == currentPlayer)
+    while (--r >= 0 && --c >= 0) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
@@ -91,15 +77,13 @@ bool PlayingField::proofWinner()
     r = lastRow;
     c = lastColumn;
     // Nach unten rechts:
-    while (++r < rows && ++c < columns)
-    {
-        if (field[r][c] == currentPlayer)
+    while (++r < rows && ++c < columns) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
-    if (stones >= 4)
-    {
+    if (stones >= 4) {
         return true;
     }
 
@@ -108,9 +92,8 @@ bool PlayingField::proofWinner()
     r = lastRow;
     c = lastColumn;
     // Nach unten links:
-    while (++r < rows && --c >= 0)
-    {
-        if (field[r][c] == currentPlayer)
+    while (++r < rows && --c >= 0) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
@@ -118,32 +101,26 @@ bool PlayingField::proofWinner()
     r = lastRow;
     c = lastColumn;
     // Nach oben rechts:
-    while (--r >= 0 && ++c < columns)
-    {
-        if (field[r][c] == currentPlayer)
+    while (--r >= 0 && ++c < columns) {
+        if (field[r][c] == currentPlayer->name)
             stones++;
         else
             break;
     }
-    if (stones >= 4)
-    {
+    if (stones > 3) {
         return true;
     }
     return false;
 }
 
-bool PlayingField::isFull()
-{
+bool PlayingField::isFull() {
     return stones >= maxStones;
 }
 
-void PlayingField::print()
-{
+void PlayingField::print() {
     std::cout << std::endl;
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < columns; j++)
-        {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
             std::cout << field[i][j] << " ";
         }
         std::cout << std::endl;
@@ -151,14 +128,11 @@ void PlayingField::print()
     std::cout << std::endl;
 }
 
-bool PlayingField::setStone(int column)
-{
+bool PlayingField::setStone(int column) {
     int row = rows - 1;
-    while (row >= 0)
-    {
-        if (field[row][column] == '0')
-        {
-            field[row][column] = currentPlayer;
+    while (row >= 0) {
+        if (field[row][column] == '0') {
+            field[row][column] = currentPlayer->name;
             break;
         }
         row--;

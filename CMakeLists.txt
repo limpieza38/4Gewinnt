@@ -3,4 +3,4 @@ project(4Gewinnt)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(4Gewinnt main.cpp PlayingField.cpp PlayingField.h Player.cpp Player.h)
+add_executable(4Gewinnt main.cpp PlayingField.cpp PlayingField.h Player.h Player.h Player.cpp RandomPlayer.cpp RandomPlayer.h CmdInputPlayer.cpp CmdInputPlayer.h)
