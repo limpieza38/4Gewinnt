@@ -6,15 +6,19 @@
 #define INC_4GEWINNT_PLAYER_H
 
 
+#include "MoveStorage.h"
+
 class PlayingField;
 
 class Player {
 private:
-    static char lastName;
+    static int lastName;
 public:
-    char name;
+    int name;
+    MoveStorage storage;
     Player();
     virtual int play(PlayingField* _playingField)=0;
+    void printStorageToFile();
 };
 
 

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <array>
 #include "PlayingField.h"
 #include "Player.h"
 PlayingField::PlayingField(Player* playerOne, Player* playerTwo) : currentPlayer(playerOne), waitingPlayer(playerTwo) {
@@ -130,8 +131,12 @@ void PlayingField::print() {
 
 bool PlayingField::setStone(int column) {
     int row = rows - 1;
+    Move move;
     while (row >= 0) {
-        if (field[row][column] == '0') {
+        if (field[row][column] == 0) {
+            move.field = copyField();
+            move.targetColumn = column;
+            currentPlayer->storage.addMove(move);
             field[row][column] = currentPlayer->name;
             break;
         }
@@ -144,3 +149,9 @@ bool PlayingField::setStone(int column) {
     lastColumn = column;
     return true;
 };
+
+std::array<std::array<int, 7>, 6> PlayingField::copyField() {
+    std::array<std::array<int, 7>, 6> target;
+    std::copy(std::begin(field), std::end(field), std::begin(target));
+    return target;
+}

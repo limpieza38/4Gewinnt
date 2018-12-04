@@ -17,13 +17,13 @@ private:
   int maxStones = 42;
   int lastRow = -1;
   int lastColumn = -1;
-  char field[6][7] = {
-      {'0', '0', '0', '0', '0', '0', '0'},
-      {'0', '0', '0', '0', '0', '0', '0'},
-      {'0', '0', '0', '0', '0', '0', '0'},
-      {'0', '0', '0', '0', '0', '0', '0'},
-      {'0', '0', '0', '0', '0', '0', '0'},
-      {'0', '0', '0', '0', '0', '0', '0'}};
+    std::array<std::array<int, 7>, 6>  field=
+            {{{0, 0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0}}};
 
 public:
   Player* currentPlayer;
@@ -34,5 +34,6 @@ public:
   void switchPlayer();
   bool proofWinner();
   bool isFull();
+    std::array<std::array<int, 7>, 6>  copyField();
 };
 #endif //INC_4GEWINNT_PLAYINGFIELD_H

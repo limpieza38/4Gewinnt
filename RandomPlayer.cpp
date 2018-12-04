@@ -2,7 +2,7 @@
 // Created by Britta on 28.11.2018.
 //
 #include "Player.h"
-#include <cstdlib>
+#include <functional>
 #include "RandomPlayer.h"
 #include "PlayingField.h"
 
