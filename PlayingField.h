@@ -5,6 +5,7 @@
 #ifndef INC_4GEWINNT_PLAYINGFIELD_H
 #define INC_4GEWINNT_PLAYINGFIELD_H
 
+#include <array>
 
 class Player;
 

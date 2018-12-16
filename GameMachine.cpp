@@ -7,22 +7,25 @@
 #include "PlayingField.h"
 #include "GameMachine.h"
 
-
-int GameMachine::playAGame(Player* playerA, Player* playerB) {
-    PlayingField field = PlayingField(playerA, playerB);
-    playingField = &field;
-    while (true) {
+Player *GameMachine::playAGame(Player *playerA, Player *playerB)
+{
+    playingField = new PlayingField(playerA, playerB);
+    while (true)
+    {
         playOneMove();
-        if (playingField->proofWinner()) {
-            if (print) {
-                std::cout << "Player " << playingField->currentPlayer->name << " wins!" << std::endl;
+        if (playingField->proofWinner())
+        {
+            if (print)
+            {
                 playingField->print();
+                std::cout << "Player " << playingField->currentPlayer->name << " wins!" << std::endl;
             }
-            playingField->currentPlayer->printStorageToFile();
-            return playingField->currentPlayer->name;
+            return playingField->currentPlayer;
         }
-        if (playingField->isFull()) {
-            if (print) {
+        if (playingField->isFull())
+        {
+            if (print)
+            {
                 std::cout << "Remis!" << std::endl;
             }
             return 0;
@@ -31,19 +34,21 @@ int GameMachine::playAGame(Player* playerA, Player* playerB) {
     }
 }
 
-void GameMachine::playOneMove() {
-    Move move;
+void GameMachine::playOneMove()
+{
     bool ok = false;
     int col;
-    if (print) {
+    if (print)
+    {
         playingField->print();
     }
-    while (!(ok || playingField->isFull())) {
+    while (!ok && !playingField->isFull())
+    {
         col = playingField->currentPlayer->play(playingField);
         ok = playingField->setStone(col);
-        if (!ok && print) {
+        if (!ok && print)
+        {
             std::cout << "Column " << col << " is already full!" << std::endl;
         }
     }
 }
-

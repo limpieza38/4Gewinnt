@@ -2,20 +2,22 @@
 #include "PlayingField.h"
 using namespace std;
 
-int Player::lastName = 0;
-Player::Player() {
-    lastName=lastName +1;
-    name = lastName;
+Player::Player(int name)
+{
+    this->name = name;
 }
 
-void Player::printStorageToFile() {
+void Player::printStorageToFile()
+{
     ofstream storageFile;
-    storageFile.open("../storage.txt", std::ios::app);
+    string filename = "./storage/" + to_string(name) + ".txt";
+    storageFile.open(filename, std::ios::app);
     if (storageFile)
     {
-        storageFile<< "\n \n";
+        storageFile << "\n\n";
         storage.printToFile(storageFile, name);
         storageFile.close();
     }
-    else cout << "Unable to open file";
+    else
+        cout << "Unable to open file";
 }

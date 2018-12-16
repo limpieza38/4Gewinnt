@@ -7,14 +7,15 @@
 
 #include "Player.h"
 
-class GameMachine {
-private:
-    PlayingField * playingField;
+class GameMachine
+{
+  private:
+    PlayingField *playingField;
     static const bool print = true;
     void playOneMove();
-public:
-    int playAGame(Player* playerA, Player* playerB);
-};
 
+  public:
+    Player *playAGame(Player *playerA, Player *playerB);
+};
 
 #endif //INC_4GEWINNT_GAMEMACHINE_H

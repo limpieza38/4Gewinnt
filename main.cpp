@@ -3,15 +3,21 @@
 #include "PlayingField.h"
 #include "RandomPlayer.h"
 #include "GameMachine.h"
+#include <ctime>
+#include "./neuralNetwork/NeuralNetwork.h"
 
-
-int main() {
+int main()
+{
     srand(time(0));
-    RandomPlayer playerA;
-    RandomPlayer playerB;
+    RandomPlayer playerA(1);
+    RandomPlayer playerB(2);
     GameMachine machine;
-    int winner = machine.playAGame(&playerA, &playerB);
+    Player *winner = machine.playAGame(&playerA, &playerB);
+    winner->printStorageToFile();
+
+    NeuralNetwork neuralNetwork;
+    neuralNetwork.train();
+    neuralNetwork.printWeightsToFile();
+
     return 0;
 }
-
-

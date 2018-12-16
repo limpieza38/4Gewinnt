@@ -5,21 +5,18 @@
 #ifndef INC_4GEWINNT_PLAYER_H
 #define INC_4GEWINNT_PLAYER_H
 
-
 #include "MoveStorage.h"
 
 class PlayingField;
 
-class Player {
-private:
-    static int lastName;
-public:
+class Player
+{
+  public:
     int name;
     MoveStorage storage;
-    Player();
-    virtual int play(PlayingField* _playingField)=0;
+    Player(int name);
+    virtual int play(PlayingField *_playingField) = 0;
     void printStorageToFile();
 };
-
 
 #endif //INC_4GEWINNT_PLAYER_H
