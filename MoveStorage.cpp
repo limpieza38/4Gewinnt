@@ -18,7 +18,18 @@ void MoveStorage::printToFile(ofstream &file, int name)
 {
     for (int i = 0; i < countMoves; i++)
     {
-        file << moves[i].targetColumn << " ";
+        for (int j = 0; j < 7; j++)
+        {
+            if (j == moves[i].targetColumn)
+            {
+                file << "1 ";
+            }
+            else
+            {
+                file << "0 ";
+            }
+        }
+        file << "| ";
         for (int row = 0; row < 6; row++)
         {
             for (int col = 0; col < 7; col++)
