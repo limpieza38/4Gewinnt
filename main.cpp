@@ -9,15 +9,20 @@
 int main()
 {
     srand(time(0));
-    RandomPlayer playerA(1);
-    RandomPlayer playerB(2);
+
+    RandomPlayer player1(1);
+    RandomPlayer player2(2);
+
+    // Generate Training Data
     GameMachine machine;
-    Player *winner = machine.playAGame(&playerA, &playerB);
+    Player *winner = machine.playAGame(&player1, &player2);
     winner->printStorageToFile();
 
-    NeuralNetwork neuralNetwork;
+    std::cout << std::endl;
+
+    // Train The Neural Network
+    NeuralNetwork neuralNetwork(&player1);
     neuralNetwork.train();
-    neuralNetwork.printWeightsToFile();
 
     return 0;
 }

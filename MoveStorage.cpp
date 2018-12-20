@@ -14,7 +14,7 @@ void MoveStorage::addMove(Move move)
     }
 }
 
-void MoveStorage::printToFile(ofstream &file, int name)
+void MoveStorage::printToFile(ofstream &file)
 {
     for (int i = 0; i < countMoves; i++)
     {

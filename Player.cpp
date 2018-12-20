@@ -11,12 +11,12 @@ Player::Player(int name)
 void Player::printStorageToFile()
 {
     ofstream storageFile;
-    string filename = "./storage/" + to_string(name) + ".txt";
+    string filename = "./player" + to_string(this->name) + "/train_data.txt";
     storageFile.open(filename, std::ios::app);
     if (storageFile)
     {
         storageFile << "\n\n";
-        storage.printToFile(storageFile, name);
+        storage.printToFile(storageFile);
         storageFile.close();
     }
     else
