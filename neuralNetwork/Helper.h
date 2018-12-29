@@ -1,10 +1,14 @@
-#ifndef INC_4GEWINNT_NEURAL_HELPER_H
-#define INC_4GEWINNT_NEURAL_HELPER_H
+//
+// Created by Britta on 29.12.2018.
+//
 
-class Helper
-{
-  public:
-    float sigmoid(float x);
+#ifndef INC_4GEWINNT_HELPER_H
+#define INC_4GEWINNT_HELPER_H
+
+
+class Helper {
+
 };
 
-#endif //INC_4GEWINNT_NEURAL_HELPER_H
+
+#endif //INC_4GEWINNT_HELPER_H
