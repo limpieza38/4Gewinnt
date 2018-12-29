@@ -38,7 +38,7 @@ void NeuralNetwork::train()
         {
             cout << "Training with next training data line..." << std::endl;
             this->loadNextTrainingLine(trainStorageFile);
-            // TODO: Train
+            this->trainOneTrainingLine();
         }
         trainStorageFile.close();
     }
@@ -48,6 +48,33 @@ void NeuralNetwork::train()
     this->printWeightsToFile();
 }
 
+void NeuralNetwork::trainOneTrainingLine(){
+    std::array<float, HIDDEN_NODES> hiddenInputs = Helper::calculateHiddenInputs(this->input, this->wih);
+    std::array<float, HIDDEN_NODES> hiddenOutputs;
+    for(int i = 0; i < HIDDEN_NODES; i++){
+        hiddenOutputs[i] = Helper::sigmoid(hiddenInputs[i]);
+    }
+    std::array<float, OUTPUT_NODES> finalInputs = Helper::calculateFinalInputs(hiddenOutputs, this->who);
+    std::array<float, OUTPUT_NODES> finalOutputs;
+    for(int i = 0; i < OUTPUT_NODES; i++){
+        finalOutputs[i] = Helper::sigmoid(finalInputs[i]);
+    }
+
+    std::array<float, OUTPUT_NODES> outputErrors;
+    for(int i = 0; i < OUTPUT_NODES; i++){
+        outputErrors[i] = this->target[i] - finalOutputs[i];
+    }
+
+    std::array<float, HIDDEN_NODES> hiddenErrors = Helper::calculateHiddenErrors(outputErrors,this->who);
+
+    this->who = Helper::calculateNewWho(outputErrors, finalOutputs, hiddenOutputs, this->who);
+    this->wih = Helper::calculateNewWih(hiddenErrors, hiddenOutputs, this->input, this->wih);
+
+}
+
+
+
+
 void NeuralNetwork::loadWeightsFromFile(ifstream &weightsStorageFile)
 {
     cout << "Reading weights from file..." << std::endl;
@@ -55,14 +82,14 @@ void NeuralNetwork::loadWeightsFromFile(ifstream &weightsStorageFile)
     {
         for (int column = 0; column < 42; column++)
         {
-            weightsStorageFile >> this->weights1[row][column];
+            weightsStorageFile >> this->wih[row][column];
         }
     }
     for (int row = 0; row < 7; row++)
     {
         for (int column = 0; column < HIDDEN_NODES; column++)
         {
-            weightsStorageFile >> this->weights2[row][column];
+            weightsStorageFile >> this->who[row][column];
         }
     }
 }
@@ -74,14 +101,14 @@ void NeuralNetwork::initializeWeightsWithRandomNumbers()
     {
         for (int column = 0; column < 42; column++)
         {
-            this->weights1[row][column] = ((float)rand()) / RAND_MAX - 0.5;
+            this->wih[row][column] = ((float)rand()) / RAND_MAX - 0.5f;
         }
     }
     for (int row = 0; row < 7; row++)
     {
         for (int column = 0; column < HIDDEN_NODES; column++)
         {
-            this->weights2[row][column] = ((float)rand()) / RAND_MAX - 0.5;
+            this->who[row][column] = ((float)rand()) / RAND_MAX - 0.5f;
         }
     }
 }
@@ -91,12 +118,18 @@ void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
     for (int i = 0; i < 7; i++)
     {
         trainStorageFile >> this->target[i];
+        if(this->target[i] == 0){
+            this->target[i] = 0.01f;
+        } else if(this->target[i] == 1){
+            this->target[i] = 0.99f;
+        }
     }
     char separarator;
     trainStorageFile >> separarator;
     for (int i = 0; i < 42; i++)
     {
         trainStorageFile >> this->input[i];
+        this->input[i] = this->input[i] / 2.00f * 0.99f + 0.01f;
     }
 }
 
@@ -112,7 +145,7 @@ void NeuralNetwork::printWeightsToFile()
         {
             for (int column = 0; column < 42; column++)
             {
-                storageFile << this->weights1[row][column] << " ";
+                storageFile << this->wih[row][column] << " ";
             }
             storageFile << std::endl;
         }
@@ -121,7 +154,7 @@ void NeuralNetwork::printWeightsToFile()
         {
             for (int column = 0; column < HIDDEN_NODES; column++)
             {
-                storageFile << this->weights2[row][column] << " ";
+                storageFile << this->who[row][column] << " ";
             }
             storageFile << std::endl;
         }

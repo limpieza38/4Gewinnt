@@ -20,5 +20,5 @@ void Player::printStorageToFile()
         storageFile.close();
     }
     else
-        cout << "Unable to open file";
+        cout << "ERROR: Unable to open file to print the storage";
 }

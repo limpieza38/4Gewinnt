@@ -2,6 +2,8 @@
 #define INC_4GEWINNT_NEURAL_NETWORK_H
 
 #define HIDDEN_NODES 20
+#define INPUT_NODES 42
+#define OUTPUT_NODES 7
 #define LEARNING_RATE 0.3
 
 #include "../PlayingField.h"
@@ -12,14 +14,15 @@ class NeuralNetwork
 {
 private:
     Player *player;
-    std::array<float, 7> target;
-    std::array<int, 42> input;
-    std::array<std::array<float, 42>, HIDDEN_NODES> weights1;
-    std::array<std::array<float, HIDDEN_NODES>, 7> weights2;
+    std::array<float, OUTPUT_NODES> target;
+    std::array<float, INPUT_NODES> input;
+    std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> wih;
+    std::array<std::array<float, OUTPUT_NODES>, HIDDEN_NODES> who;
     void loadWeightsFromFile(ifstream &weightsStorageFile);
     void initializeWeightsWithRandomNumbers();
     void loadNextTrainingLine(ifstream &trainStorageFile);
     void printWeightsToFile();
+    void trainOneTrainingLine();
 
 public:
     NeuralNetwork(Player *player)
