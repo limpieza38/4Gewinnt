@@ -113,18 +113,18 @@ void NeuralNetwork::loadWeightsFromFile(ifstream &weightsStorageFile)
 void NeuralNetwork::initializeWeightsWithRandomNumbers()
 {
     cout << "Initializing weights with random numbers..." << std::endl;
-    for (int row = 0; row < HIDDEN_NODES; row++)
+    for (int inID = 0; inID < INPUT_NODES; inID++)
     {
-        for (int column = 0; column < 42; column++)
+        for (int hiId = 0; hiId < HIDDEN_NODES; hiId++)
         {
-            this->wih[row][column] = ((float)rand()) / RAND_MAX - 0.5f;
+            this->wih[inID][hiId] = ((float)rand()) / RAND_MAX - 0.5f;
         }
     }
-    for (int row = 0; row < 7; row++)
+    for (int hiId = 0; hiId < HIDDEN_NODES; hiId++)
     {
-        for (int column = 0; column < HIDDEN_NODES; column++)
+        for (int outId = 0; outId < OUTPUT_NODES; outId++)
         {
-            this->who[row][column] = ((float)rand()) / RAND_MAX - 0.5f;
+            this->who[hiId][outId] = ((float)rand()) / RAND_MAX - 0.5f;
         }
     }
 }
