@@ -22,3 +22,23 @@ void Player::printStorageToFile()
     else
         cout << "ERROR: Unable to open file to print the storage";
 }
+
+void Player::saveMove(std::array<std::array<int, 7>, 6> field, int column)
+{
+    Move move;
+    move.field = field;
+    std::array<int, 7> targetColumns;
+    for (int i = 0; i < 7; i++)
+    {
+        if (i == column)
+        {
+            targetColumns[i] = 1;
+        }
+        else
+        {
+            targetColumns[i] = 0;
+        }
+    }
+    move.targetColumns = targetColumns;
+    this->storage.addMove(move);
+}

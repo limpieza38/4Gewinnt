@@ -13,24 +13,22 @@
 class NeuralNetwork
 {
 private:
-    Player *player;
-    std::array<float, OUTPUT_NODES> target;
-    std::array<float, INPUT_NODES> input;
-    std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> wih;
-    std::array<std::array<float, OUTPUT_NODES>, HIDDEN_NODES> who;
-    void loadWeightsFromFile(ifstream &weightsStorageFile);
-    void initializeWeightsWithRandomNumbers();
-    void loadNextTrainingLine(ifstream &trainStorageFile);
-    void printWeightsToFile();
-    void trainOneTrainingLine();
+  string folderName;
+  std::array<float, OUTPUT_NODES> target;
+  std::array<float, INPUT_NODES> input;
+  std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> wih;
+  std::array<std::array<float, OUTPUT_NODES>, HIDDEN_NODES> who;
+  void initializeWeights();
+  void loadWeightsFromFile(ifstream &weightsStorageFile);
+  void initializeWeightsWithRandomNumbers();
+  void loadNextTrainingLine(ifstream &trainStorageFile);
+  void printWeightsToFile();
+  void trainOneTrainingLine();
 
 public:
-    NeuralNetwork(Player *player)
-    {
-        this->player = player;
-    };
-    void train();
-    int quest(PlayingField *playingField);
+  NeuralNetwork(string folderName);
+  void train();
+  std::array<float, 7> quest(std::array<int, INPUT_NODES> input);
 };
 
 #endif //INC_4GEWINNT_NEURAL_NETWORK_H

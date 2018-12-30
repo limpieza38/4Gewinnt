@@ -1,28 +1,33 @@
 #include <iostream>
 #include "Player.h"
-#include "PlayingField.h"
 #include "RandomPlayer.h"
+#include "NNPlayer.h"
 #include "GameMachine.h"
 #include <ctime>
-#include "./neuralNetwork/NeuralNetwork.h"
 
 int main()
 {
     srand(time(0));
 
-    RandomPlayer player1(1);
-    RandomPlayer player2(2);
-
-    // Generate Training Data
+    NNPlayer player1(1);
+    NNPlayer player2(2);
     GameMachine machine;
-    Player *winner = machine.playAGame(&player1, &player2);
-    winner->printStorageToFile();
 
-    std::cout << std::endl;
-
-    // Train The Neural Network
-    NeuralNetwork neuralNetwork(&player1);
-    neuralNetwork.train();
+    for (int i = 0; i < 100; i++)
+    {
+        cout << "Game #" << i + 1 << std::endl;
+        Player *winner = machine.playAGame(&player1, &player2);
+        if (winner == &player1)
+        {
+            player2.printStorageToFile();
+            player2.train();
+        }
+        else if (winner == &player2)
+        {
+            player1.printStorageToFile();
+            player1.train();
+        }
+    }
 
     return 0;
 }

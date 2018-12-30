@@ -4,8 +4,9 @@
 #include <array>
 #include "NeuralNetwork.h"
 
-class Helper {
-public:
+class Helper
+{
+  public:
     static float sigmoid(float x);
 
     static std::array<float, HIDDEN_NODES> calculateHiddenInputs(std::array<float, INPUT_NODES> input,
@@ -26,8 +27,6 @@ public:
     calculateNewWih(std::array<float, HIDDEN_NODES> hiddenErrors, std::array<float, HIDDEN_NODES> hiddenOutputs,
                     std::array<float, INPUT_NODES> inputs,
                     std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> wih);
-
-
 };
 
 #endif //INC_4GEWINNT_NEURAL_HELPER_H

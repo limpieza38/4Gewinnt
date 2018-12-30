@@ -20,14 +20,7 @@ void MoveStorage::printToFile(ofstream &file)
     {
         for (int j = 0; j < 7; j++)
         {
-            if (j == moves[i].targetColumn)
-            {
-                file << "1 ";
-            }
-            else
-            {
-                file << "0 ";
-            }
+            file << moves[i].targetColumns[j] << " ";
         }
         file << "| ";
         for (int row = 0; row < 6; row++)

@@ -2,27 +2,27 @@
 // Created by Britta on 03.12.2018.
 //
 
-#include <iostream>
-#include "Player.h"
-#include "PlayingField.h"
 #include "GameMachine.h"
+#include <iostream>
 
-Player *GameMachine::playAGame(Player *playerA, Player *playerB)
+Player *GameMachine::playAGame(Player *player1, Player *player2)
 {
-    playingField = new PlayingField(playerA, playerB);
+    this->currentPlayer = player1;
+    this->waitingPlayer = player2;
+    this->playingField = new PlayingField();
     while (true)
     {
         playOneMove();
-        if (playingField->proofWinner())
+        if (this->playingField->proofWinner())
         {
             if (print)
             {
-                playingField->print();
-                std::cout << "Player " << playingField->currentPlayer->name << " wins!" << std::endl;
+                this->playingField->print();
+                std::cout << "Player " << this->currentPlayer->name << " wins!" << std::endl;
             }
-            return playingField->currentPlayer;
+            return this->currentPlayer;
         }
-        if (playingField->isFull())
+        if (this->playingField->isFull())
         {
             if (print)
             {
@@ -30,25 +30,49 @@ Player *GameMachine::playAGame(Player *playerA, Player *playerB)
             }
             return 0;
         }
-        playingField->switchPlayer();
+        this->switchPlayer();
     }
 }
 
 void GameMachine::playOneMove()
 {
     bool ok = false;
-    int col;
     if (print)
     {
-        playingField->print();
+        this->playingField->print();
     }
-    while (!ok && !playingField->isFull())
+    std::array<std::array<int, 7>, 6> currentField = this->playingField->copyField();
+    bool chooseOther = false;
+    while (!ok && !this->playingField->isFull())
     {
-        col = playingField->currentPlayer->play(playingField);
-        ok = playingField->setStone(col);
+        int col = 0;
+        if (chooseOther)
+        {
+            col = this->currentPlayer->chooseOtherColumn();
+        }
+        else
+        {
+            col = this->currentPlayer->play(this->playingField);
+        }
+        ok = this->playingField->setStone(col, this->currentPlayer->name);
+        if (ok)
+        {
+            this->currentPlayer->saveMove(currentField, col);
+        }
+        else
+        {
+            chooseOther = true;
+        }
         if (!ok && print)
         {
             std::cout << "Column " << col << " is already full!" << std::endl;
         }
     }
+}
+
+void GameMachine::switchPlayer()
+{
+    Player *lastPlayer = this->currentPlayer;
+    this->currentPlayer = this->waitingPlayer;
+    this->waitingPlayer = lastPlayer;
 }

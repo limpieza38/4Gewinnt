@@ -16,6 +16,7 @@ class RandomPlayer : public Player
 
   public:
     int play(PlayingField *);
+    int chooseOtherColumn();
     RandomPlayer(int name) : Player(name){};
 };
 

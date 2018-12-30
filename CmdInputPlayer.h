@@ -10,8 +10,9 @@
 
 class CmdInputPlayer : public Player
 {
-  public:
-    int play(PlayingField *);
+public:
+  int play(PlayingField *);
+  int chooseOtherColumn();
 };
 
 #endif //INC_4GEWINNT_CMDINPUTPLAYER_H

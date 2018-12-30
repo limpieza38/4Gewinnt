@@ -7,8 +7,6 @@
 
 #include <array>
 
-class Player;
-
 class PlayingField
 {
 private:
@@ -18,23 +16,21 @@ private:
   int maxStones = 42;
   int lastRow = -1;
   int lastColumn = -1;
-    std::array<std::array<int, 7>, 6>  field=
-            {{{0, 0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0, 0},
-      {0, 0, 0, 0, 0, 0, 0}}};
+  std::array<std::array<int, 7>, 6> field =
+      {{{0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0}}};
 
 public:
-  Player* currentPlayer;
-  Player* waitingPlayer;
-  PlayingField(Player* playerOne,Player* playerTwo);
   void print();
-  bool setStone(int column);
-  void switchPlayer();
+  bool setStone(int column, int color);
   bool proofWinner();
   bool isFull();
-    std::array<std::array<int, 7>, 6>  copyField();
+  std::array<std::array<int, 7>, 6> copyField();
+  std::array<int, 42> toOneDimensionalArray();
 };
+
 #endif //INC_4GEWINNT_PLAYINGFIELD_H
