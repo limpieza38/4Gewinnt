@@ -40,7 +40,7 @@ std::array<float, HIDDEN_NODES> Helper::calculateHiddenErrors(std::array<float, 
         hiddenErrors[hiId] = 0;
         for(int outId = 0; outId< HIDDEN_NODES; outId++){
 
-            hiddenErrors[hiId] += outputErrors[outId] * who[outId][hiId];
+            hiddenErrors[hiId] += outputErrors[outId] * who[hiId][outId];
         }
     }
     return hiddenErrors;
@@ -64,12 +64,11 @@ std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> Helper::calculateNewWih
         std::array<float, HIDDEN_NODES> hiddenErrors, std::array<float, HIDDEN_NODES> hiddenOutputs,
         std::array<float, INPUT_NODES> inputs, std::array<std::array<float, HIDDEN_NODES>, INPUT_NODES> wih) {
     float errorFactor;
-    for(int hiId = 0; hiId < OUTPUT_NODES; hiId++){
+    for(int hiId = 0; hiId < HIDDEN_NODES; hiId++){
         errorFactor = hiddenErrors[hiId]*hiddenOutputs[hiId]*(1.00f-hiddenOutputs[hiId]);
-        for(int inId =0; inId< HIDDEN_NODES; inId++){
+        for(int inId =0; inId < INPUT_NODES; inId++){
             wih[inId][hiId] += LEARNING_RATE * errorFactor * inputs[inId];
         }
     }
     return wih;
-
 }
