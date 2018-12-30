@@ -6,7 +6,7 @@
 #define INC_4GEWINNT_CMDINPUTPLAYER_H
 
 #include "Player.h"
-#include "PlayingField.h"
+#include "../PlayingField.h"
 
 class CmdInputPlayer : public Player
 {

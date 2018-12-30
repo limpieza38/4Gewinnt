@@ -1,6 +1,4 @@
 #include <iostream>
-#include "Player.h"
-#include "RandomPlayer.h"
 #include "NNPlayer.h"
 #include "GameMachine.h"
 #include <ctime>

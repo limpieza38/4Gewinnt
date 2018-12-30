@@ -3,7 +3,7 @@
 int NNPlayer::play(PlayingField *_playingField)
 {
     std::array<int, 42> input = _playingField->toOneDimensionalArray();
-    this->lastOutputs = this->neuralNetwork->quest(input);
+    this->lastOutputs = this->neuralNetwork->questArray(input);
 
     this->lastMax = 0;
     int column = 0;

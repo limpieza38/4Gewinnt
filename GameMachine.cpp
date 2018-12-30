@@ -52,10 +52,3 @@ void GameMachine::playOneMove()
         }
     }
 }
-
-void GameMachine::switchPlayer()
-{
-    Player *lastPlayer = this->currentPlayer;
-    this->currentPlayer = this->waitingPlayer;
-    this->waitingPlayer = lastPlayer;
-}

@@ -9,9 +9,10 @@
 
 class Move
 {
-public:
-  std::array<std::array<int, 7>, 6> field;
-  std::array<int, 7> targetColumns;
+  public:
+    std::array<std::array<int, 7>, 6> field;
+    int targetColumn;
+    std::array<int, 7> targetColumns;
 };
 
 #endif //INC_4GEWINNT_MOVE_H

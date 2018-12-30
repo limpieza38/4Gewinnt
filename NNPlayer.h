@@ -2,7 +2,7 @@
 #define INC_4GEWINNT_NNPLAYER_H
 
 #include <random>
-#include "Player.h"
+#include "Player/Player.h"
 #include "./neuralNetwork/NeuralNetwork.h"
 
 class NNPlayer : public Player
@@ -17,7 +17,7 @@ class NNPlayer : public Player
     int chooseOtherColumn();
     NNPlayer(int name) : Player(name)
     {
-        this->neuralNetwork = new NeuralNetwork("player" + to_string(name));
+        this->neuralNetwork = new NeuralNetwork(name);
     };
     ~NNPlayer()
     {

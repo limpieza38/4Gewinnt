@@ -13,7 +13,6 @@ class GameMachine
     PlayingField *playingField;
     static const bool print = true;
     void playOneMove();
-    void switchPlayer();
 
   public:
     Player *playAGame(Player *playerA, Player *playerB);
