@@ -5,7 +5,7 @@
 #ifndef INC_4GEWINNT_PLAYER_H
 #define INC_4GEWINNT_PLAYER_H
 
-#include "MoveStorage.h"
+#include "../MoveStorage.h"
 #include "PlayingField.h"
 #include <array>
 

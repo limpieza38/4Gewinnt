@@ -4,4 +4,4 @@ project(4Gewinnt)
 set(CMAKE_CXX_STANDARD 11)
 
 
-add_executable(4Gewinnt main.cpp PlayingField.cpp PlayingField.h Player.h Player.h Player.cpp RandomPlayer.cpp RandomPlayer.h CmdInputPlayer.cpp CmdInputPlayer.h MoveStorage.cpp MoveStorage.h Move.cpp Move.h GameMachine.cpp GameMachine.h neuralNetwork/NeuralNetwork.cpp neuralNetwork/NeuralNetwork.h neuralNetwork/Helper.cpp neuralNetwork/Helper.h)
+add_executable(4Gewinnt main.cpp PlayingField.cpp PlayingField.h Player/Player.h Player/Player.h Player/Player.cpp Player/RandomPlayer.cpp Player/NeuralNetworkPlayer.h  Player/NeuralNetworkPlayer.cpp Player/RandomPlayer.h Player/CmdInputPlayer.cpp Player/CmdInputPlayer.h MoveStorage.cpp MoveStorage.h Move.cpp Move.h GameMachine.cpp GameMachine.h neuralNetwork/NeuralNetwork.cpp neuralNetwork/NeuralNetwork.h neuralNetwork/Helper.cpp neuralNetwork/Helper.h)

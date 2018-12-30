@@ -5,21 +5,18 @@
 #ifndef INC_4GEWINNT_GAMEMACHINE_H
 #define INC_4GEWINNT_GAMEMACHINE_H
 
-#include "Player.h"
-#include "PlayingField.h"
+#include "Player/Player.h"
 
 class GameMachine
 {
-private:
-  PlayingField *playingField;
-  static const bool print = true;
-  void playOneMove();
-  Player *currentPlayer;
-  Player *waitingPlayer;
-  void switchPlayer();
+  private:
+    PlayingField *playingField;
+    static const bool print = true;
+    void playOneMove();
+    void switchPlayer();
 
-public:
-  Player *playAGame(Player *player1, Player *player2);
+  public:
+    Player *playAGame(Player *playerA, Player *playerB);
 };
 
 #endif //INC_4GEWINNT_GAMEMACHINE_H

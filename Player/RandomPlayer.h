@@ -10,10 +10,6 @@
 
 class RandomPlayer : public Player
 {
-  private:
-    static const std::default_random_engine generator;
-    static const std::uniform_int_distribution<int> distribution;
-
   public:
     int play(PlayingField *);
     int chooseOtherColumn();
