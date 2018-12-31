@@ -12,7 +12,7 @@
 using namespace std;
 class NeuralNetwork
 {
-private:
+  private:
     int playerName;
     std::array<float, OUTPUT_NODES> target;
     std::array<float, INPUT_NODES> input;
@@ -24,15 +24,14 @@ private:
     void printWeightsToFile();
     void trainOneTrainingLine();
 
-
-public:
+  public:
     void loadWeights();
     NeuralNetwork(int playerName)
     {
         this->playerName = playerName;
     };
     void train();
-    int quest(std::array<float, INPUT_NODES> fieldInput);
+    int quest(std::array<int, INPUT_NODES> input);
     float transformInput(float value);
     std::array<float, 7> questArray(std::array<int, INPUT_NODES> input);
 };

@@ -30,15 +30,9 @@ void Player::saveMove(std::array<std::array<int, 7>, 6> field, int column)
     std::array<int, 7> targetColumns;
     for (int i = 0; i < 7; i++)
     {
-        if (i == column)
-        {
-            targetColumns[i] = 1;
-        }
-        else
-        {
-            targetColumns[i] = 0;
-        }
+        targetColumns[i] = 0;
     }
+    targetColumns[column] = 1;
     move.targetColumns = targetColumns;
     this->storage.addMove(move);
 }

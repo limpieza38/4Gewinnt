@@ -16,9 +16,8 @@ public:
   MoveStorage storage;
   Player(int name);
   virtual int play(PlayingField *_playingField) = 0;
-  virtual int chooseOtherColumn() = 0;
-  void printStorageToFile();
   void saveMove(std::array<std::array<int, 7>, 6> field, int column);
+  void printStorageToFile();
 };
 
 #endif //INC_4GEWINNT_PLAYER_H

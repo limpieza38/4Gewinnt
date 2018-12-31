@@ -1,16 +1,19 @@
 //
 // Created by Britta on 28.11.2018.
 //
-#include "Player.h"
 #include <functional>
 #include "RandomPlayer.h"
-#include "../PlayingField.h"
 
-int RandomPlayer::play(PlayingField *_playingField) {
-    return rand() % 7;
-}
-
-int RandomPlayer::chooseOtherColumn()
+int RandomPlayer::play(PlayingField *_playingField)
 {
-    return rand() % 7;
+    while (true)
+    {
+        int col = rand() % 7;
+        bool ok = _playingField->setStone(col, this->name);
+        if (ok)
+        {
+            this->saveMove(_playingField->copyField(), col);
+            return col;
+        }
+    }
 }

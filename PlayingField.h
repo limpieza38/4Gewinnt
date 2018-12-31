@@ -18,21 +18,18 @@ private:
   int maxStones = 42;
   int lastRow = -1;
   int lastColumn = -1;
+  std::array<std::array<int, COLUMNS>, ROWS> field =
+      {{{0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0}}};
 
 public:
-    std::array<std::array<int, COLUMNS>, ROWS>  field=
-            {{{0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0}}};
-  Player* currentPlayer;
-  Player* waitingPlayer;
-  PlayingField(Player* playerOne,Player* playerTwo);
+  PlayingField(){};
   void print();
-  bool setStone(int column);
-  void switchPlayer();
+  bool setStone(int column, int color);
   bool proofWinner();
   bool isFull();
   std::array<std::array<int, 7>, 6> copyField();

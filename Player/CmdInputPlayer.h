@@ -11,8 +11,7 @@
 class CmdInputPlayer : public Player
 {
 public:
-  int play(PlayingField *);
-  int chooseOtherColumn();
+  int play(PlayingField *playingField);
 };
 
 #endif //INC_4GEWINNT_CMDINPUTPLAYER_H

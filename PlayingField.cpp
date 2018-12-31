@@ -5,125 +5,131 @@
 #include <iostream>
 #include <array>
 #include "PlayingField.h"
-#include "Player/Player.h"
 
-PlayingField::PlayingField(Player* playerOne, Player* playerTwo) : currentPlayer(playerOne), waitingPlayer(playerTwo) {
-
-}
-
-void PlayingField::switchPlayer() {
-    Player* lastPlayer = currentPlayer;
-    currentPlayer = waitingPlayer;
-    waitingPlayer = lastPlayer;
-}
-
-bool PlayingField::proofWinner() {
+bool PlayingField::proofWinner()
+{
     int stones = 1;
-    int r = lastRow;
-    int c = lastColumn;
-    int lastColor = field[lastRow][lastColumn];
+    int r = this->lastRow;
+    int c = this->lastColumn;
+    int lastColor = this->field[lastRow][lastColumn];
 
     // Row:
     // Nach links:
-    while (--c >= 0) {
-        if (field[r][c] == currentPlayer->name)
+    while (--c >= 0)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
     c = lastColumn;
     // Nach rechts:
-    while (++c < COLUMNS) {
-        if (field[r][c] == currentPlayer->name)
+    while (++c < COLUMNS)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    if (stones >= 4) {
+    if (stones >= 4)
+    {
         return true;
     }
 
     // Column:
     stones = 1;
-    r = lastRow;
-    c = lastColumn;
+    r = this->lastRow;
+    c = this->lastColumn;
     // Nach oben:
-    while (--r >= 0) {
-        if (field[r][c] == currentPlayer->name)
+    while (--r >= 0)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
     r = lastRow;
     // Nach unten:
-    while (++r < ROWS) {
-        if (field[r][c] == currentPlayer->name)
+    while (++r < ROWS)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    if (stones >= 4) {
+    if (stones >= 4)
+    {
         return true;
     }
 
     // Diagonal von oben links nach unten rechts:
     stones = 1;
-    r = lastRow;
-    c = lastColumn;
+    r = this->lastRow;
+    c = this->lastColumn;
     // Nach oben links:
-    while (--r >= 0 && --c >= 0) {
-        if (field[r][c] == currentPlayer->name)
+    while (--r >= 0 && --c >= 0)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    r = lastRow;
-    c = lastColumn;
+    r = this->lastRow;
+    c = this->lastColumn;
     // Nach unten rechts:
-    while (++r < ROWS && ++c < COLUMNS) {
-        if (field[r][c] == currentPlayer->name)
+    while (++r < ROWS && ++c < COLUMNS)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    if (stones >= 4) {
+    if (stones >= 4)
+    {
         return true;
     }
 
     // Diagonal von unten links nach oben rechts:
     stones = 1;
-    r = lastRow;
-    c = lastColumn;
+    r = this->lastRow;
+    c = this->lastColumn;
     // Nach unten links:
-    while (++r < ROWS && --c >= 0) {
-        if (field[r][c] == currentPlayer->name)
+    while (++r < ROWS && --c >= 0)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    r = lastRow;
-    c = lastColumn;
+    r = this->lastRow;
+    c = this->lastColumn;
     // Nach oben rechts:
-    while (--r >= 0 && ++c < COLUMNS) {
-        if (field[r][c] == currentPlayer->name)
+    while (--r >= 0 && ++c < COLUMNS)
+    {
+        if (this->field[r][c] == lastColor)
             stones++;
         else
             break;
     }
-    if (stones > 3) {
+    if (stones > 3)
+    {
         return true;
     }
     return false;
 }
 
-bool PlayingField::isFull() {
-    return stones >= maxStones;
+bool PlayingField::isFull()
+{
+    return this->stones >= this->maxStones;
 }
 
-void PlayingField::print() {
+void PlayingField::print()
+{
     std::cout << std::endl;
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
             std::cout << field[i][j] << " ";
         }
         std::cout << std::endl;
@@ -131,28 +137,26 @@ void PlayingField::print() {
     std::cout << std::endl;
 }
 
-bool PlayingField::setStone(int column) {
+bool PlayingField::setStone(int column, int color)
+{
     int row = ROWS - 1;
-    Move move;
-    while (row >= 0) {
-        if (field[row][column] == 0) {
-            move.field = copyField();
-            move.targetColumn = column;
-            currentPlayer->storage.addMove(move);
-            field[row][column] = currentPlayer->name;
-            break;
+    while (row >= 0)
+    {
+        if (this->field[row][column] == 0)
+        {
+            this->field[row][column] = color;
+            this->stones++;
+            this->lastRow = row;
+            this->lastColumn = column;
+            return true;
         }
         row--;
     }
-    if (row < 0)
-        return false;
-    stones++;
-    lastRow = row;
-    lastColumn = column;
-    return true;
+    return false;
 };
 
-std::array<std::array<int, 7>, 6> PlayingField::copyField() {
+std::array<std::array<int, 7>, 6> PlayingField::copyField()
+{
     std::array<std::array<int, 7>, 6> target;
     std::copy(std::begin(field), std::end(field), std::begin(target));
     return target;

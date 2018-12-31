@@ -1,5 +1,5 @@
 #include <iostream>
-#include "NNPlayer.h"
+#include "./Player/NeuralNetworkPlayer.h"
 #include "GameMachine.h"
 #include <ctime>
 
@@ -7,8 +7,8 @@ int main()
 {
     srand(time(0));
 
-    NNPlayer player1(1);
-    NNPlayer player2(2);
+    NeuralNetworkPlayer player1(1);
+    NeuralNetworkPlayer player2(2);
     GameMachine machine;
 
     for (int i = 0; i < 100; i++)

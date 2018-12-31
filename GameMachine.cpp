@@ -3,52 +3,40 @@
 //
 
 #include <iostream>
-#include "Player/Player.h"
-#include "PlayingField.h"
 #include "GameMachine.h"
 
 Player *GameMachine::playAGame(Player *playerA, Player *playerB)
 {
-    playingField = new PlayingField(playerA, playerB);
+    this->currentPlayer = playerA;
+    this->waitingPlayer = playerB;
+    this->playingField = new PlayingField();
     while (true)
     {
-        playOneMove();
-        if (playingField->proofWinner())
+        this->currentPlayer->play(this->playingField);
+        if (this->playingField->proofWinner())
         {
-            if (print)
+            if (this->print)
             {
-                playingField->print();
-                std::cout << "Player " << playingField->currentPlayer->name << " wins!" << std::endl;
+                this->playingField->print();
+                std::cout << "Player " << this->currentPlayer->name << " wins!" << std::endl;
             }
-            return playingField->currentPlayer;
+            return this->currentPlayer;
         }
-        if (playingField->isFull())
+        if (this->playingField->isFull())
         {
-            if (print)
+            if (this->print)
             {
                 std::cout << "Remis!" << std::endl;
             }
             return 0;
         }
-        playingField->switchPlayer();
+        this->switchPlayer();
     }
 }
 
-void GameMachine::playOneMove()
+void GameMachine::switchPlayer()
 {
-    bool ok = false;
-    int col;
-    if (print)
-    {
-        playingField->print();
-    }
-    while (!ok && !playingField->isFull())
-    {
-        col = playingField->currentPlayer->play(playingField);
-        ok = playingField->setStone(col);
-        if (!ok && print)
-        {
-            std::cout << "Column " << col << " is already full!" << std::endl;
-        }
-    }
+    Player *lastPlayer = this->currentPlayer;
+    this->currentPlayer = this->waitingPlayer;
+    this->waitingPlayer = lastPlayer;
 }

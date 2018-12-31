@@ -11,7 +11,6 @@ class Move
 {
   public:
     std::array<std::array<int, 7>, 6> field;
-    int targetColumn;
     std::array<int, 7> targetColumns;
 };
 

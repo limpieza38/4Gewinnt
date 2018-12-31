@@ -30,7 +30,8 @@ void NeuralNetwork::train()
     this->printWeightsToFile();
 }
 
-void NeuralNetwork::loadWeights() {
+void NeuralNetwork::loadWeights()
+{
     // Initialize weights or read from file if exists
     string weightsStorageFileName = "./player" + to_string(this->playerName) + "/weights.txt";
     ifstream weightsStorageFile(weightsStorageFileName);
@@ -50,35 +51,34 @@ void NeuralNetwork::loadWeights() {
         // Initialize weights with random numbers
         this->initializeWeightsWithRandomNumbers();
     }
-
 }
 
-void NeuralNetwork::trainOneTrainingLine(){
+void NeuralNetwork::trainOneTrainingLine()
+{
     std::array<float, HIDDEN_NODES> hiddenInputs = Helper::calculateHiddenInputs(this->input, this->wih);
     std::array<float, HIDDEN_NODES> hiddenOutputs;
-    for(int i = 0; i < HIDDEN_NODES; i++){
+    for (int i = 0; i < HIDDEN_NODES; i++)
+    {
         hiddenOutputs[i] = Helper::sigmoid(hiddenInputs[i]);
     }
     std::array<float, OUTPUT_NODES> finalInputs = Helper::calculateFinalInputs(hiddenOutputs, this->who);
     std::array<float, OUTPUT_NODES> finalOutputs;
-    for(int i = 0; i < OUTPUT_NODES; i++){
+    for (int i = 0; i < OUTPUT_NODES; i++)
+    {
         finalOutputs[i] = Helper::sigmoid(finalInputs[i]);
     }
 
     std::array<float, OUTPUT_NODES> outputErrors;
-    for(int i = 0; i < OUTPUT_NODES; i++){
+    for (int i = 0; i < OUTPUT_NODES; i++)
+    {
         outputErrors[i] = this->target[i] - finalOutputs[i];
     }
 
-    std::array<float, HIDDEN_NODES> hiddenErrors = Helper::calculateHiddenErrors(outputErrors,this->who);
+    std::array<float, HIDDEN_NODES> hiddenErrors = Helper::calculateHiddenErrors(outputErrors, this->who);
 
     this->who = Helper::calculateNewWho(outputErrors, finalOutputs, hiddenOutputs, this->who);
     this->wih = Helper::calculateNewWih(hiddenErrors, hiddenOutputs, this->input, this->wih);
-
 }
-
-
-
 
 void NeuralNetwork::loadWeightsFromFile(ifstream &weightsStorageFile)
 {
@@ -116,6 +116,7 @@ void NeuralNetwork::initializeWeightsWithRandomNumbers()
             this->who[hiId][outId] = ((float)rand()) / RAND_MAX - 0.5f;
         }
     }
+    this->printWeightsToFile();
 }
 
 void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
@@ -123,9 +124,12 @@ void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
     for (int i = 0; i < 7; i++)
     {
         trainStorageFile >> this->target[i];
-        if(this->target[i] == 0){
+        if (this->target[i] == 0)
+        {
             this->target[i] = 0.01f;
-        } else if(this->target[i] == 1){
+        }
+        else if (this->target[i] == 1)
+        {
             this->target[i] = 0.99f;
         }
     }
@@ -138,7 +142,8 @@ void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
     }
 }
 
-float NeuralNetwork::transformInput(float value) {
+float NeuralNetwork::transformInput(float value)
+{
     return value / 2.00f * 0.99f + 0.001f;
 }
 
@@ -173,23 +178,31 @@ void NeuralNetwork::printWeightsToFile()
         cout << "ERROR: Unable to write weights to file" << std::endl;
 }
 
-int NeuralNetwork::quest(std::array<float, INPUT_NODES> fieldInput)
+int NeuralNetwork::quest(std::array<int, INPUT_NODES> input)
 {
-    std::array<float, HIDDEN_NODES> hiddenInputs = Helper::calculateHiddenInputs(fieldInput, this->wih);
+    for (int i = 0; i < INPUT_NODES; i++)
+    {
+        this->input[i] = this->transformInput(input[i]);
+    }
+    std::array<float, HIDDEN_NODES> hiddenInputs = Helper::calculateHiddenInputs(this->input, this->wih);
     std::array<float, HIDDEN_NODES> hiddenOutputs;
-    for(int i = 0; i < HIDDEN_NODES; i++){
+    for (int i = 0; i < HIDDEN_NODES; i++)
+    {
         hiddenOutputs[i] = Helper::sigmoid(hiddenInputs[i]);
     }
     std::array<float, OUTPUT_NODES> finalInputs = Helper::calculateFinalInputs(hiddenOutputs, this->who);
     std::array<float, OUTPUT_NODES> finalOutputs;
-    for(int i = 0; i < OUTPUT_NODES; i++){
+    for (int i = 0; i < OUTPUT_NODES; i++)
+    {
         finalOutputs[i] = Helper::sigmoid(finalInputs[i]);
     }
     int highestTargetColumn = 0;
-    for(int i = 1; i< OUTPUT_NODES; i++){
-           if(finalOutputs[highestTargetColumn] < finalOutputs[i]){
-               highestTargetColumn = i;
-           }
+    for (int i = 1; i < OUTPUT_NODES; i++)
+    {
+        if (finalOutputs[highestTargetColumn] < finalOutputs[i])
+        {
+            highestTargetColumn = i;
+        }
     }
     return highestTargetColumn;
 }
@@ -198,7 +211,7 @@ std::array<float, 7> NeuralNetwork::questArray(std::array<int, INPUT_NODES> inpu
 {
     for (int i = 0; i < INPUT_NODES; i++)
     {
-        this->input[i] = (float)input[i] / 2.00f * 0.99f + 0.01f;
+        this->input[i] = this->transformInput(input[i]);
     }
     std::array<float, HIDDEN_NODES> hiddenInputs = Helper::calculateHiddenInputs(this->input, this->wih);
     std::array<float, HIDDEN_NODES> hiddenOutputs;

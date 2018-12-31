@@ -7,13 +7,13 @@
 
 #include <random>
 #include "Player.h"
+#include "../PlayingField.h"
 
 class RandomPlayer : public Player
 {
-  public:
-    int play(PlayingField *);
-    int chooseOtherColumn();
-    RandomPlayer(int name) : Player(name){};
+public:
+  int play(PlayingField *);
+  RandomPlayer(int name) : Player(name){};
 };
 
 #endif //INC_4GEWINNT_RANDOMPLAYER_H

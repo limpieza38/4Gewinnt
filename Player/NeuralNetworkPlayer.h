@@ -6,18 +6,23 @@
 #define INC_4GEWINNT_NEURALNETWORKPLAYER_H
 
 #include "Player.h"
+#include "../PlayingField.h"
 #include "../neuralNetwork/NeuralNetwork.h"
 
 class NeuralNetworkPlayer : public Player
 {
-  private:
-    NeuralNetwork neuralNetwork;
-    std::array<float, INPUT_NODES> transformFieldToInput(PlayingField * playingField);
-  public:
-    int play(PlayingField *);
-    NeuralNetworkPlayer(int name) : Player(name), neuralNetwork(NeuralNetwork(name)) {
-        neuralNetwork.loadWeights();
-    };
+private:
+  NeuralNetwork neuralNetwork;
+
+public:
+  int play(PlayingField *_playingField);
+  NeuralNetworkPlayer(int name) : Player(name), neuralNetwork(NeuralNetwork(name))
+  {
+    neuralNetwork.loadWeights();
+  };
+  void train();
+  void saveMove(std::array<std::array<int, 7>, 6> field, int column);
+  void printStorageToFile();
 };
 
 #endif //INC_4GEWINNT_NEURALNETWORKPLAYER_H
