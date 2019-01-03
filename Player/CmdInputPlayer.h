@@ -8,10 +8,10 @@
 #include "Player.h"
 #include "../PlayingField.h"
 
-class CmdInputPlayer : public Player
-{
+class CmdInputPlayer : public Player {
 public:
-  int play(PlayingField *playingField);
+    int play(PlayingField *playingField);
+    CmdInputPlayer(int name) : Player(name) {};
 };
 
 #endif //INC_4GEWINNT_CMDINPUTPLAYER_H
