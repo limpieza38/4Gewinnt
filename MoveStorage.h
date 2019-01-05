@@ -15,7 +15,7 @@ private:
         int countMoves = 0;
         Move moves[21];
 public:
-        void printToFile(ofstream &file, int name);
+        void printToFile(ofstream &file);
         void addMove(Move move);
 };
 

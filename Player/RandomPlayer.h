@@ -7,14 +7,13 @@
 
 #include <random>
 #include "Player.h"
+#include "../PlayingField.h"
 
-class RandomPlayer : public Player {
-private:
-    static const std::default_random_engine generator;
-    static const std::uniform_int_distribution<int> distribution;
+class RandomPlayer : public Player
+{
 public:
-    int play(PlayingField*);
+  int play(PlayingField *);
+  RandomPlayer(int name) : Player(name){};
 };
-
 
 #endif //INC_4GEWINNT_RANDOMPLAYER_H

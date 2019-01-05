@@ -5,14 +5,13 @@
 #ifndef INC_4GEWINNT_MOVE_H
 #define INC_4GEWINNT_MOVE_H
 
-
 #include <array>
 
-class Move {
-public:
+class Move
+{
+  public:
     std::array<std::array<int, 7>, 6> field;
-    int targetColumn;
+    std::array<int, 7> targetColumns;
 };
-
 
 #endif //INC_4GEWINNT_MOVE_H

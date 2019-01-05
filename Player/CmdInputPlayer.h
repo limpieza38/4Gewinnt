@@ -4,14 +4,14 @@
 
 #ifndef INC_4GEWINNT_CMDINPUTPLAYER_H
 #define INC_4GEWINNT_CMDINPUTPLAYER_H
+
 #include "Player.h"
+#include "../PlayingField.h"
 
-
-
-class CmdInputPlayer : public Player {
+class CmdInputPlayer : public Player
+{
 public:
-    int play(PlayingField*);
+  int play(PlayingField *playingField);
 };
-
 
 #endif //INC_4GEWINNT_CMDINPUTPLAYER_H

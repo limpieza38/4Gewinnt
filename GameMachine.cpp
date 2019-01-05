@@ -3,47 +3,40 @@
 //
 
 #include <iostream>
-#include "Player.h"
-#include "PlayingField.h"
 #include "GameMachine.h"
 
-
-int GameMachine::playAGame(Player* playerA, Player* playerB) {
-    PlayingField field = PlayingField(playerA, playerB);
-    playingField = &field;
-    while (true) {
-        playOneMove();
-        if (playingField->proofWinner()) {
-            if (print) {
-                std::cout << "Player " << playingField->currentPlayer->name << " wins!" << std::endl;
-                playingField->print();
+Player *GameMachine::playAGame(Player *playerA, Player *playerB)
+{
+    this->currentPlayer = playerA;
+    this->waitingPlayer = playerB;
+    this->playingField = new PlayingField();
+    while (true)
+    {
+        this->currentPlayer->play(this->playingField);
+        if (this->playingField->proofWinner())
+        {
+            if (this->print)
+            {
+                this->playingField->print();
+                std::cout << "Player " << this->currentPlayer->name << " wins!" << std::endl;
             }
-            playingField->currentPlayer->printStorageToFile();
-            return playingField->currentPlayer->name;
+            return this->currentPlayer;
         }
-        if (playingField->isFull()) {
-            if (print) {
+        if (this->playingField->isFull())
+        {
+            if (this->print)
+            {
                 std::cout << "Remis!" << std::endl;
             }
             return 0;
         }
-        playingField->switchPlayer();
+        this->switchPlayer();
     }
 }
 
-void GameMachine::playOneMove() {
-    Move move;
-    bool ok = false;
-    int col;
-    if (print) {
-        playingField->print();
-    }
-    while (!(ok || playingField->isFull())) {
-        col = playingField->currentPlayer->play(playingField);
-        ok = playingField->setStone(col);
-        if (!ok && print) {
-            std::cout << "Column " << col << " is already full!" << std::endl;
-        }
-    }
+void GameMachine::switchPlayer()
+{
+    Player *lastPlayer = this->currentPlayer;
+    this->currentPlayer = this->waitingPlayer;
+    this->waitingPlayer = lastPlayer;
 }
-
