@@ -11,7 +11,7 @@ void NeuralNetwork::train()
 
     for (int epoch = 0; epoch < EPOCHS; epoch++)
     {
-        cout << "EPOCH " << epoch << std::endl;
+        cout << "EPOCH " << epoch + 1 << "/" << EPOCHS << std::endl;
         loadWeights();
 
         ifstream trainStorageFile;
@@ -21,9 +21,7 @@ void NeuralNetwork::train()
         {
             while (!trainStorageFile.eof())
             {
-                cout << "Loading next training data line..." << std::endl;
                 this->loadNextTrainingLine(trainStorageFile);
-                cout << "Training with next training data line..." << std::endl;
                 this->trainOneTrainingLine();
             }
             trainStorageFile.close();
@@ -87,7 +85,6 @@ void NeuralNetwork::trainOneTrainingLine()
 
 void NeuralNetwork::loadWeightsFromFile(ifstream &weightsStorageFile)
 {
-    cout << "Reading weights from file..." << std::endl;
     for (int inId = 0; inId < INPUT_NODES; inId++)
     {
         for (int hiId = 0; hiId < HIDDEN_NODES; hiId++)
@@ -146,7 +143,6 @@ float NeuralNetwork::transformInput(float value)
 
 void NeuralNetwork::printWeightsToFile()
 {
-    cout << "Writing weights to file..." << std::endl;
     ofstream storageFile;
     string filename = "./player" + to_string(this->playerName) + "/weights.txt";
     storageFile.open(filename);
