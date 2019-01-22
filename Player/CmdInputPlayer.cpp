@@ -16,10 +16,11 @@ int CmdInputPlayer::play(PlayingField *_playingField)
     {
         std::cin >> col;
         col--;
-        bool ok = _playingField->setStone(col, this->name);
+        bool ok = _playingField->tryStone(col, this->name);
         if (ok)
         {
             this->saveMove(_playingField->copyField(), col);
+            _playingField->setStone(col, this->name);
             return col;
         }
         std::cout << "Column is already full, choose another one: ";

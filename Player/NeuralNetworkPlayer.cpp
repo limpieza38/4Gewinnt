@@ -21,10 +21,11 @@ int NeuralNetworkPlayer::play(PlayingField *_playingField)
                 max = output[i];
             }
         }
-        bool ok = _playingField->setStone(col, this->name);
+        bool ok = _playingField->tryStone(col, this->name);
         if (ok)
         {
             this->saveMove(_playingField->copyField(), col);
+            _playingField->setStone(col, this->name);
             return col;
         }
         else
@@ -32,6 +33,7 @@ int NeuralNetworkPlayer::play(PlayingField *_playingField)
             output[col] = -1; // Beim nächsten Durchlauf wird diese Spalte nicht mehr genommen
         }
     }
+    return 0;
 }
 
 void NeuralNetworkPlayer::train()

@@ -9,25 +9,30 @@ void NeuralNetwork::train()
 {
     cout << "TRAINING:" << std::endl;
 
-    loadWeights();
-
-    ifstream trainStorageFile;
-    string filename = "./player" + to_string(this->playerName) + "/train_data.txt";
-    trainStorageFile.open(filename);
-    if (trainStorageFile)
+    for (int epoch = 0; epoch < EPOCHS; epoch++)
     {
-        while (!trainStorageFile.eof())
-        {
-            cout << "Training with next training data line..." << std::endl;
-            this->loadNextTrainingLine(trainStorageFile);
-            this->trainOneTrainingLine();
-        }
-        trainStorageFile.close();
-    }
-    else
-        cout << "ERROR: Unable to open training data file" << std::endl;
+        cout << "EPOCH " << epoch << std::endl;
+        loadWeights();
 
-    this->printWeightsToFile();
+        ifstream trainStorageFile;
+        string filename = "./player" + to_string(this->playerName) + "/train_data.txt";
+        trainStorageFile.open(filename);
+        if (trainStorageFile)
+        {
+            while (!trainStorageFile.eof())
+            {
+                cout << "Loading next training data line..." << std::endl;
+                this->loadNextTrainingLine(trainStorageFile);
+                cout << "Training with next training data line..." << std::endl;
+                this->trainOneTrainingLine();
+            }
+            trainStorageFile.close();
+        }
+        else
+            cout << "ERROR: Unable to open training data file" << std::endl;
+
+        this->printWeightsToFile();
+    }
 }
 
 void NeuralNetwork::loadWeights()
@@ -121,21 +126,13 @@ void NeuralNetwork::initializeWeightsWithRandomNumbers()
 
 void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
 {
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < OUTPUT_NODES; i++)
     {
         trainStorageFile >> this->target[i];
-        if (this->target[i] == 0)
-        {
-            this->target[i] = 0.01f;
-        }
-        else if (this->target[i] == 1)
-        {
-            this->target[i] = 0.99f;
-        }
     }
     char separarator;
     trainStorageFile >> separarator;
-    for (int i = 0; i < 42; i++)
+    for (int i = 0; i < INPUT_NODES; i++)
     {
         trainStorageFile >> this->input[i];
         this->input[i] = transformInput(this->input[i]);
@@ -144,7 +141,7 @@ void NeuralNetwork::loadNextTrainingLine(ifstream &trainStorageFile)
 
 float NeuralNetwork::transformInput(float value)
 {
-    return value / 2.00f * 0.99f + 0.001f;
+    return (value / (float)POSSIBLE_VALUES) * 0.99f + 0.01f;
 }
 
 void NeuralNetwork::printWeightsToFile()
@@ -207,7 +204,7 @@ int NeuralNetwork::quest(std::array<int, INPUT_NODES> input)
     return highestTargetColumn;
 }
 
-std::array<float, 7> NeuralNetwork::questArray(std::array<int, INPUT_NODES> input)
+std::array<float, OUTPUT_NODES> NeuralNetwork::questArray(std::array<int, INPUT_NODES> input)
 {
     for (int i = 0; i < INPUT_NODES; i++)
     {

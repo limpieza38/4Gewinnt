@@ -11,6 +11,7 @@
 class CmdInputPlayer : public Player
 {
 public:
+  CmdInputPlayer(int name) : Player(name){};
   int play(PlayingField *playingField);
 };
 

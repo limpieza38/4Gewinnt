@@ -29,7 +29,8 @@ private:
 public:
   PlayingField(){};
   void print();
-  bool setStone(int column, int color);
+  bool tryStone(int column, int color);
+  void setStone(int column, int color);
   bool proofWinner();
   bool isFull();
   std::array<std::array<int, 7>, 6> copyField();

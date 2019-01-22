@@ -137,7 +137,21 @@ void PlayingField::print()
     std::cout << std::endl;
 }
 
-bool PlayingField::setStone(int column, int color)
+bool PlayingField::tryStone(int column, int color)
+{
+    int row = ROWS - 1;
+    while (row >= 0)
+    {
+        if (this->field[row][column] == 0)
+        {
+            return true;
+        }
+        row--;
+    }
+    return false;
+};
+
+void PlayingField::setStone(int column, int color)
 {
     int row = ROWS - 1;
     while (row >= 0)
@@ -148,11 +162,10 @@ bool PlayingField::setStone(int column, int color)
             this->stones++;
             this->lastRow = row;
             this->lastColumn = column;
-            return true;
+            return;
         }
         row--;
     }
-    return false;
 };
 
 std::array<std::array<int, 7>, 6> PlayingField::copyField()
